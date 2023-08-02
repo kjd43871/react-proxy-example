@@ -1,7 +1,7 @@
 
 export const getAllBooks = async () => {
 
-    const response = await fetch('http://localhost:3080/api/books');
+    const response = await fetch('/api/books');
     return await response.json();
 }
 

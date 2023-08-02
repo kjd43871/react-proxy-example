@@ -1,3 +1,4 @@
+const { createProxyMiddleware} = require('http-proxy-middleware');
 const express = require('express');
 const path = require('path');
 const app = express(),
@@ -10,7 +11,15 @@ const todos = [{
   category: "운동",
   isComplete: true
   }];
-
+  module.exports = function(app) {
+    app.use(
+      '/api', //proxy가 필요한 path prameter를 입력합니다.
+      createProxyMiddleware({
+        target: 'http://localhost:3080', //타겟이 되는 api url를 입력합니다.
+        changeOrigin: true, //대상 서버 구성에 따라 호스트 헤더가 변경되도록 설정하는 부분입니다.
+      })
+    );
+  };
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../my-app/build')));
 
